@@ -59,9 +59,9 @@ Comme méthodes :
     rechercherTrajet(String villeDepart, String villeArrivee)                                                               ********************OK********************
     topConducteurs() : retourne les 3 conducteurs avec la plus grande distance totale parcourue                             ********************OK********************
     afficherStatistiques() qui affiche                                                                                      ------------------------------------------
-        la moyenne des distances
-        le pourcentage de trajets longs
-        la vitesse moyenne globale
+        la moyenne des distances                                                                                            ********************OK********************
+        le pourcentage de trajets longs                                                                                     ------------------------------------------
+        la vitesse moyenne globale                                                                                          ------------------------------------------
 
 Interface Evaluable  ------------------------------------------------------------------------------------------------------------------------Evaluable----------------
 

@@ -2,7 +2,7 @@ package fr.covoiturage;
 
 public interface Evaluable {
 
-    void ajouterNote(int note);
+    void ajouterNote(Utilisateur utilisateur, int note);
 
     double calculerNoteMoyenne();
 

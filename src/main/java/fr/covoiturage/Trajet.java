@@ -7,20 +7,23 @@ public class Trajet {
     String arrivee="";
     int distance=0;
     double dureePrev=0;//a exprimer en minutes*0.0167 (1/60 = 0.0167)
-    String conducteur="";
+    private Conducteur conducteur;
     ArrayList<Passager> listePassager;
+    boolean estRapide=false;
+    double vitesseMoyenne=0;
     
 
 
 
 
-    public Trajet(String depart, String arrivee, int distance, double dureePrev, String conducteur) {
+    public Trajet(String depart, String arrivee, int distance, double dureePrev, Conducteur conducteur) {
         this.depart = depart;
         this.arrivee = arrivee;
         this.distance = distance;
         this.dureePrev = dureePrev;
         this.conducteur = conducteur;
         this.listePassager = new ArrayList<>();
+        this.calculerVitesseMoyenne();
     }
 
     
@@ -49,14 +52,14 @@ public class Trajet {
     public double getDureePrev() {
         return dureePrev;
     }
-    public void setDureePrev(int dureePrev) {
+    public void setDureePrev(double dureePrev) {
         this.dureePrev = dureePrev;
     }
 
-    public String getConducteur() {
+    public Conducteur getConducteur() {
         return conducteur;
     }
-    public void setConducteur(String conducteur) {
+    public void setConducteur(Conducteur conducteur) {
         this.conducteur = conducteur;
     }
 
@@ -73,21 +76,31 @@ public class Trajet {
     }
 
     
-    public void calculerVitesseMoyenne() {
+public void calculerVitesseMoyenne() {
         if (dureePrev > 0) {
-            double vitesseMoyenne = (double) distance / dureePrev;
-            System.out.println("La vitesse moyenne est de " + vitesseMoyenne + " km/h.");
+            this.vitesseMoyenne = (double) distance / dureePrev;
+            System.out.println("La vitesse moyenne est de " + this.vitesseMoyenne + " km/h.");
         } else {
             System.out.println("La durée prévue doit être supérieure à zéro pour calculer la vitesse moyenne.");
         }
     }
     
+
+
+
     public boolean estLong() {
         return distance > 300; // Exemple de logique : un trajet est long s'il dépasse 100 km
-    }
+          }
 
     public boolean estRapide() {
-        return FOIREUUUUUX dureePrev < 2; //   estRapide() retourne vrai si la vitesse moyenne > 100 km/h 
+        System.out.println("vitesseMoyenne = " + this.vitesseMoyenne);
+        if(this.vitesseMoyenne<=100){
+            estRapide=false;
+            System.out.println( "non n'est pas rapide");
+        }else{
+            estRapide=true;
+            System.out.println( "oui est rapide");}
+        return estRapide; //   estRapide() retourne vrai si la vitesse moyenne > 100 km/h 
     }
 
 
@@ -96,10 +109,8 @@ public class Trajet {
     @Override
     public String toString() {
         return "Trajet [depart=" + depart + ", arrivee=" + arrivee + ", distance=" + distance + ", dureePrev="
-                + dureePrev + ", conducteur=" + conducteur + ", listePassager=" + listePassager + "]";
+                + dureePrev + ", conducteur=" + conducteur.getNom() + ", listePassager=" + listePassager + "]";
     }
-
-
 
 
 

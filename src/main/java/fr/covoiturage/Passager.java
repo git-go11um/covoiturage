@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Passager extends Utilisateur implements Evaluable{
     
-    private ArrayList<Trajet> trajetsuivis;
+    private ArrayList<Trajet> trajetSuivis;
     private String destPref = "";
     private List<Integer> notes;
 
@@ -15,14 +15,14 @@ public class Passager extends Utilisateur implements Evaluable{
     public Passager(String nom, String villeDepart, String villeArrivee, String destPref, int moyenneDistance) {
         super(nom, villeDepart, villeArrivee, moyenneDistance);
         this.destPref = destPref;
-        this.trajetsuivis=new ArrayList<>();
+        this.trajetSuivis=new ArrayList<>();
         this.notes=new ArrayList<>();
     }
 
 
     @Override
     public String getNom() {
-        return "Passager : " + super.getNom(); // Surcharge du getter
+        return super.getNom(); // Surcharge du getter
     }
 
 
@@ -43,8 +43,8 @@ public class Passager extends Utilisateur implements Evaluable{
     }
 
 
-    public ArrayList<Trajet> getTrajetsuivis() {
-        return trajetsuivis;
+    public ArrayList<Trajet> getTrajetSuivis() {
+        return trajetSuivis;
     }
 
     public String getDestPref() {
@@ -54,18 +54,49 @@ public class Passager extends Utilisateur implements Evaluable{
         this.destPref = destPref;
     }
 
-    public void suivreTrajet(Trajet trajet){
-        trajetsuivis.add(trajet);
+    public void suivreTrajet(PlateformeCovoiturage plateforme, String villeDepart, String villeArrivee) {
+        List<Trajet> trajetsTrouves = plateforme.rechercherTrajet(villeDepart, villeArrivee);
+    
+        if (!trajetsTrouves.isEmpty()) {
+            for (Trajet trajet : trajetsTrouves) {
+                if (!trajetSuivis.contains(trajet)) {
+                    trajetSuivis.add(trajet);
+                }
+            }
+            System.out.println("Le passager " + getNom() + " suit maintenant la liste de trajets suivante : " + getTrajetSuivis());
+        } else {
+            System.out.println("Aucun trajet correspondant trouvé pour le départ de " + villeDepart + " et l'arrivée à " + villeArrivee);
+        }
     }
 
+    public void noterConducteur(Evaluable evaluable, int note) {
+        evaluable.ajouterNote(this, note);
+        System.out.println("Le passager " + getNom() + " a noté " + evaluable + " avec une note de " + note);
+    }
+
+
     @Override
-    public void ajouterNote(int note) {
-        notes.add(note);
+    public void ajouterNote(Utilisateur utilisateur, int note) {
+        if (utilisateur instanceof Conducteur || utilisateur instanceof Passager) {
+            notes.add(note);
+            System.out.println("Le passager " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
+        } else {
+            System.out.println("Seuls les conducteurs et les passagers peuvent noter les passagers.");
+        }
     }
 
     @Override
     public double calculerNoteMoyenne() {
-        return notes.stream().mapToInt(Integer::intValue).average().orElse(0);
+        if (notes.isEmpty()) {
+            return 0; // Si la liste des notes est vide, retourner 0
+        }
+
+        int somme = 0;
+        for (int note : notes) {
+            somme += note;
+        }
+
+        return (double) somme / notes.size();
     }
 
     @Override
@@ -75,8 +106,8 @@ public class Passager extends Utilisateur implements Evaluable{
 
     @Override
     public String toString() {
-        return "Passager [nom=" + nom + ", villeDepart=" + villeDepart + ", villeArrivee=" + villeArrivee
-                + ", trajetsPassager=" + trajetsuivis + ", destPref=" + destPref + "]";
+        return "Passager [nom=" + getNom() + ", villeDepart=" + getVilleDepart() + ", villeArrivee=" + getVilleArrivee()
+                + ", trajetsPassager=" + trajetSuivis + ", destPref=" + destPref + "]";
     }
 
     

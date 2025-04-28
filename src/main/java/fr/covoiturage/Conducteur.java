@@ -37,9 +37,13 @@ public class Conducteur extends Utilisateur implements Evaluable{
 
     @Override
     public String getNom() {
-        return "Conducteur : " + super.getNom(); // Surcharge du getter
+        return super.getNom(); // Surcharge du getter
     }
 
+    @Override
+    public void setNom(String nom) {
+        super.setNom(nom); // Utilisez super.setNom() pour définir le nom de l'utilisateur
+    }
     public ArrayList<Trajet> getTrajets() {
         return trajets;
     }
@@ -50,10 +54,13 @@ public class Conducteur extends Utilisateur implements Evaluable{
         this.voiture = voiture;
     }
 
-    public void ajouterTrajet(Trajet trajet){
-        trajets.add(trajet);
+    public void ajouterTrajet(Trajet trajet) {
+        if (trajet != null) {
+            trajets.add(trajet);
+        } else {
+            System.out.println("Erreur : Le trajet à ajouter ne peut pas être null.");
+        }
     }
-
 
 
 
@@ -63,10 +70,27 @@ public class Conducteur extends Utilisateur implements Evaluable{
     }
 
 
-    @Override
-    public void ajouterNote(int note) {
-        notes.add(note);
+/*     @Override
+    public void ajouterNote(Utilisateur utilisateur, int note) {
+        if (utilisateur instanceof Passager) {
+            notes.add(note);
+            System.out.println("Le conducteur " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
+        } else {
+            System.out.println("Seuls les passagers peuvent noter les conducteurs.");
+        }
     }
+ */
+    @Override
+public void ajouterNote(Utilisateur utilisateur, int note) {
+    if (utilisateur instanceof Passager) {
+        Passager passager = (Passager) utilisateur;
+        passager.ajouterNote(this, note); // Le conducteur note le passager
+        System.out.println("Le conducteur " + getNom() + " a donné une note de " + note + " au passager " + passager.getNom());
+    } else {
+        System.out.println("Seuls les passagers peuvent être notés par les conducteurs.");
+    }
+}
+
 
     @Override
     public double calculerNoteMoyenne() {
@@ -92,7 +116,8 @@ public class Conducteur extends Utilisateur implements Evaluable{
 
     @Override
     public String toString() {
-        return "Conducteur [nom=" + nom + ", trajets=" + trajets + ", voiture=" + voiture + " distance totale : " + calculerDistanceTotale() + "]";
+        return "Conducteur [nom=" + getNom() + ", villeDepart=" + getVilleDepart() + ", villeArrivee=" + getVilleArrivee() +
+               ", voiture=" + voiture + ", distance totale : " + calculerDistanceTotale() + " km" + ", note moyenne : " + calculerNoteMoyenne() + "]";
     }
 
 

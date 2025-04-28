@@ -2,10 +2,10 @@ package fr.covoiturage;
 
 public class Utilisateur {
     
-    String nom ="";
-    String villeDepart="";
-    String villeArrivee="";
-    double moyenneDistance;
+    private String nom ="";
+    private String villeDepart="";
+    private String villeArrivee="";
+    private double moyenneDistance;
      
     public Utilisateur(String nom, String villeDepart, String villeArrivee, double moyenneDistance) {
         this.nom = nom;
@@ -46,7 +46,8 @@ public class Utilisateur {
 
 
     public void afficherProfil(){
-        System.out.println("l'utilisateur " + nom);
+        System.out.println("Profil de l'utilisateur :");
+        System.out.println(this.toString());
     }
 
     @Override

@@ -9,9 +9,20 @@ public class PlateformeCovoiturage {
     double moyenneDistance;
     int distanceTotale;
 
+    public PlateformeCovoiturage(double moyenneDistance, int distanceTotale) {
+        this.utilisateurs = new ArrayList<>();
+        this.trajets = new ArrayList<>();
+        this.moyenneDistance = moyenneDistance;
+        this.distanceTotale = distanceTotale;
+    }
+
+    
+    // Constructeur sans paramètres
     public PlateformeCovoiturage() {
         this.utilisateurs = new ArrayList<>();
         this.trajets = new ArrayList<>();
+        this.moyenneDistance = 0;
+        this.distanceTotale = 0;
     }
 
     public ArrayList<Utilisateur> getListeUtilisateurs() {
@@ -21,9 +32,12 @@ public class PlateformeCovoiturage {
         this.utilisateurs = listeUtilisateur;
     }
 
-    public ArrayList<Trajet> getTrajets() {
-        return trajets;
+    public void afficherTrajets() {
+        for (Trajet trajet : trajets) {
+            System.out.println(trajet);
+        }
     }
+
     public void setTrajets(ArrayList<Trajet> trajets) {
         this.trajets = trajets;
     }
@@ -80,19 +94,18 @@ public class PlateformeCovoiturage {
 
     public double calculerMoyenneDistance() {
         int nbTrajet = 0;
-        distanceTotale = 0; // Réinitialiser distanceTotale à chaque appel
+        this.distanceTotale = 0; // Réinitialiser distanceTotale à chaque appel
     
         for (Trajet trajet : trajets) {
             nbTrajet++;
-            distanceTotale += trajet.getDistance(); // Utiliser getDistance() pour accéder à la distance
-        }
+            this.distanceTotale += trajet.getDistance(); // Utiliser getDistance() pour accéder à la distance
+            }
     
         if (nbTrajet == 0) {
             return 0; // Si aucun trajet, la distance moyenne est 0
         }
-    
-        moyenneDistance = (double) distanceTotale / nbTrajet; // Caster en double pour éviter la division entière
-        return moyenneDistance;
+        this.moyenneDistance = (double) this.distanceTotale / nbTrajet; // Caster en double pour éviter la division entière
+        return this.moyenneDistance;
     }
 
     public void afficherStatistiques(Conducteur conducteur){
