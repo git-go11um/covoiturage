@@ -12,22 +12,22 @@ public class Lanceur {
         Passager pass1 = new Passager("aaaaa", "b", "c","d", 0);
         Passager pass2 = new Passager("bbbbb", "c", "d","e", 0);
 
-        Trajet traj1 = new Trajet("Paris","Bordeaux", 587, 6.2291,conducteur1);
-        Trajet traj2 = new Trajet("Paris","Lille", 225, 2.4883,conducteur1);
-        Trajet traj3 = new Trajet("Paris","Lyon", 466, 4.843,conducteur1);
-        Trajet traj4 = new Trajet("Paris","Marseille", 773, 8.016,conducteur1);
-        Trajet traj5 = new Trajet("Paris","Strasbourg", 491, 5.2939,conducteur1);
-        Trajet traj6 = new Trajet("Lille","Bordeaux", 798, 8.4335,conducteur1);
-        Trajet traj7 = new Trajet("Lille","Lyon", 691, 7.3981,conducteur1);
-        Trajet traj8 = new Trajet("Lille","Marseille", 999, 10.6713,conducteur1);
-        Trajet traj9 = new Trajet("Lille","Strasbourg", 524, 5.6112,conducteur1);
-        Trajet traj10 = new Trajet("Bordeaux","Lyon", 554, 5.678,conducteur1);
-        Trajet traj11 = new Trajet("Bordeaux","Marseille", 645, 6.8303,conducteur1);
-        Trajet traj12 = new Trajet("Bordeaux","Strasbourg", 964, 10.4542,conducteur1);
-        Trajet traj13 = new Trajet("Lyon","Marseille", 313, 3.3233,conducteur1);
-        Trajet traj14 = new Trajet("Lyon","Strasbourg", 493, 5.3941,conducteur1);
-        Trajet traj15 = new Trajet("Marseille","Strasbourg", 800, 8.5671,conducteur1);
-        Trajet traj16 = new Trajet("Paris","Melun", 100, 0.8851,conducteur1);
+        Trajet traj1 = new Trajet("Paris","Bordeaux", 587, 6.2291,conducteur1,6);
+        Trajet traj2 = new Trajet("Paris","Lille", 225, 2.4883,conducteur1,2);
+        Trajet traj3 = new Trajet("Paris","Lyon", 466, 4.843,conducteur1,4);
+        Trajet traj4 = new Trajet("Paris","Marseille", 773, 8.016,conducteur1,8);
+        Trajet traj5 = new Trajet("Paris","Strasbourg", 491, 5.2939,conducteur1,5);
+        Trajet traj6 = new Trajet("Lille","Bordeaux", 798, 8.4335,conducteur1,8);
+        Trajet traj7 = new Trajet("Lille","Lyon", 691, 7.3981,conducteur1,7);
+        Trajet traj8 = new Trajet("Lille","Marseille", 999, 10.6713,conducteur1,10);
+        Trajet traj9 = new Trajet("Lille","Strasbourg", 524, 5.6112,conducteur1,5);
+        Trajet traj10 = new Trajet("Bordeaux","Lyon", 554, 5.678,conducteur1,5);
+        Trajet traj11 = new Trajet("Bordeaux","Marseille", 645, 6.8303,conducteur1,6);
+        Trajet traj12 = new Trajet("Bordeaux","Strasbourg", 964, 10.4542,conducteur1,10);
+        Trajet traj13 = new Trajet("Lyon","Marseille", 313, 3.3233,conducteur1,3);
+        Trajet traj14 = new Trajet("Lyon","Strasbourg", 493, 5.3941,conducteur1,5);
+        Trajet traj15 = new Trajet("Marseille","Strasbourg", 800, 8.5671,conducteur1,8);
+        Trajet traj16 = new Trajet("Paris","Melun", 100, 0.8851,conducteur1,0.5);
 
         PlateformeCovoiturage plateforme = new PlateformeCovoiturage(0,0);
 
@@ -66,7 +66,9 @@ public class Lanceur {
         //conducteur1.ajouterTrajet(traj3);
         //conducteur2.ajouterTrajet(traj1);
        // conducteur3.ajouterTrajet(traj7);
-        //conducteur4.ajouterTrajet(traj15);
+        conducteur4.ajouterTrajet(traj1);
+        conducteur4.ajouterTrajet(traj2);
+        conducteur4.ajouterTrajet(traj3);
 
 
         List<Conducteur> topConducteurs = plateforme.topConducteurs();
@@ -98,11 +100,24 @@ public class Lanceur {
         plateforme.afficherTrajets();
         System.out.println("**********");
         pass1.suivreTrajet(plateforme, "Paris", "Lyon");
-        pass1.noterConducteur(conducteur1, 12);
+        pass1.ajouterNote(conducteur1, 12);
+        pass1.ajouterNote(conducteur1, 14);
+        pass1.ajouterNote(conducteur2, 5);
+        pass1.ajouterNote(conducteur3, 9);
+        pass1.ajouterNote(conducteur1, 18);
+
         System.out.println(conducteur1.calculerNoteMoyenne());
         System.out.println(conducteur1);
         conducteur1.ajouterNote(pass1, 7);
-        System.out.println(pass1.calculerNoteMoyenne());
+        //System.out.println("noteMoyenne : " + pass1.calculerNoteMoyenne());
         //System.out.println(pass1);
+        System.out.println("*********" + " " + "**********");
+        //plateforme.afficherStatistiques();
+
+
+        plateforme.trierConducteursParNote();
+
+
+
     }
 }

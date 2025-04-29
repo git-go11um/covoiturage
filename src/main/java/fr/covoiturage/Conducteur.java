@@ -54,6 +54,8 @@ public class Conducteur extends Utilisateur implements Evaluable{
         this.voiture = voiture;
     }
 
+
+
     public void ajouterTrajet(Trajet trajet) {
         if (trajet != null) {
             trajets.add(trajet);
@@ -70,39 +72,33 @@ public class Conducteur extends Utilisateur implements Evaluable{
     }
 
 
-/*     @Override
+    @Override
     public void ajouterNote(Utilisateur utilisateur, int note) {
         if (utilisateur instanceof Passager) {
-            notes.add(note);
-            System.out.println("Le conducteur " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
+            Passager passager = (Passager) utilisateur;
+            passager.ajouterNote(note); // Appeler la méthode ajouterNote du passager
+            System.out.println("Le conducteur " + getNom() + " a donné une note de " + note + " au passager " + passager.getNom());
         } else {
-            System.out.println("Seuls les passagers peuvent noter les conducteurs.");
+            System.out.println("Seuls les passagers peuvent être notés par les conducteurs.");
         }
     }
- */
-    @Override
-public void ajouterNote(Utilisateur utilisateur, int note) {
-    if (utilisateur instanceof Passager) {
-        Passager passager = (Passager) utilisateur;
-        passager.ajouterNote(this, note); // Le conducteur note le passager
-        System.out.println("Le conducteur " + getNom() + " a donné une note de " + note + " au passager " + passager.getNom());
-    } else {
-        System.out.println("Seuls les passagers peuvent être notés par les conducteurs.");
-    }
-}
 
+    public void ajouterNote(int note) {
+        notes.add(note);
+        System.out.println("Note ajoutée : " + note); // Ajout d'un message de débogage
+    }
 
     @Override
     public double calculerNoteMoyenne() {
         if (notes.isEmpty()) {
             return 0;
         }
-    
+
         int somme = 0;
         for (int note : notes) {
             somme += note;
         }
-    
+
         return (double) somme / notes.size();
     }
 

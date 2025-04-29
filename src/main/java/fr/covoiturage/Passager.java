@@ -19,7 +19,6 @@ public class Passager extends Utilisateur implements Evaluable{
         this.notes=new ArrayList<>();
     }
 
-
     @Override
     public String getNom() {
         return super.getNom(); // Surcharge du getter
@@ -69,21 +68,25 @@ public class Passager extends Utilisateur implements Evaluable{
         }
     }
 
-    public void noterConducteur(Evaluable evaluable, int note) {
-        evaluable.ajouterNote(this, note);
-        System.out.println("Le passager " + getNom() + " a noté " + evaluable + " avec une note de " + note);
-    }
-
-
     @Override
     public void ajouterNote(Utilisateur utilisateur, int note) {
-        if (utilisateur instanceof Conducteur || utilisateur instanceof Passager) {
+        if (utilisateur instanceof Conducteur) {
+            Conducteur conducteur = (Conducteur) utilisateur;
+            conducteur.ajouterNote(note); // Ajouter directement la note au conducteur
+            System.out.println("Le passager " + getNom() + " a donné une note de " + note + " au conducteur " + conducteur.getNom());
+        } else if (utilisateur instanceof Passager) {
             notes.add(note);
             System.out.println("Le passager " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
         } else {
-            System.out.println("Seuls les conducteurs et les passagers peuvent noter les passagers.");
+            System.out.println("Seuls les conducteurs peuvent être notés par les passagers, et seuls les passagers peuvent noter d'autres passagers.");
         }
     }
+
+    public void ajouterNote(int note) {
+        notes.add(note);
+        System.out.println("Note ajoutée : " + note); // Ajout d'un message de débogage
+    }
+
 
     @Override
     public double calculerNoteMoyenne() {

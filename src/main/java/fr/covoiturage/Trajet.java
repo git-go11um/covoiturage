@@ -7,6 +7,7 @@ public class Trajet {
     String arrivee="";
     int distance=0;
     double dureePrev=0;//a exprimer en minutes*0.0167 (1/60 = 0.0167)
+    double duree=0;
     private Conducteur conducteur;
     ArrayList<Passager> listePassager;
     boolean estRapide=false;
@@ -16,17 +17,25 @@ public class Trajet {
 
 
 
-    public Trajet(String depart, String arrivee, int distance, double dureePrev, Conducteur conducteur) {
+    public Trajet(String depart, String arrivee, int distance, double dureePrev, Conducteur conducteur, double duree) {
         this.depart = depart;
         this.arrivee = arrivee;
         this.distance = distance;
         this.dureePrev = dureePrev;
         this.conducteur = conducteur;
+        this.duree = duree;
         this.listePassager = new ArrayList<>();
         this.calculerVitesseMoyenne();
     }
 
     
+
+    public double getDuree() {
+        return duree;
+    }
+    public void setDuree(double duree) {
+        this.duree = duree;
+    }
 
     public String getDepart() {
         return depart;

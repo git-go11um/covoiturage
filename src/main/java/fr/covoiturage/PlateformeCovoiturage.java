@@ -4,16 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlateformeCovoiturage {
-    ArrayList<Utilisateur> utilisateurs;
-    ArrayList<Trajet> trajets;
-    double moyenneDistance;
-    int distanceTotale;
+    double totalTrajet;
+    private ArrayList<Utilisateur> utilisateurs;
+    private ArrayList<Trajet> trajets;
+    private double moyenneDistance;
+    private int distanceTotale;
+    private int nbTrajetLong;
+    private int nbTrajet;
+    private double pourcenTrajetLong;
+    private double dureeTotale;
+    private double vitesseMoyenneGlobale;
 
     public PlateformeCovoiturage(double moyenneDistance, int distanceTotale) {
         this.utilisateurs = new ArrayList<>();
         this.trajets = new ArrayList<>();
         this.moyenneDistance = moyenneDistance;
         this.distanceTotale = distanceTotale;
+        this.dureeTotale = 0;
+        this.vitesseMoyenneGlobale = 0;
     }
 
     
@@ -108,15 +116,81 @@ public class PlateformeCovoiturage {
         return this.moyenneDistance;
     }
 
-    public void afficherStatistiques(Conducteur conducteur){
-        //System.out.println("l'utilisateur " + conducteur.getNom() + ", distance moyenne : " + getMoyenneDistance + ", " + trajetLong + "%, vitesse moyenne : "+ vitesseMoyenne);
-        System.out.println("l'utilisateur " + conducteur.getNom() + ", distance moyenne : " + moyenneDistance);
-    }
+
     public void triNoteConducteur(){
         System.out.println("l'utilisateur ");
     }    
 
+    public void calculerPourcentageTrajetsLongs() {
+        nbTrajet = 0; // Réinitialiser le nombre total de trajets
+        nbTrajetLong = 0; // Réinitialiser le nombre de trajets longs
 
+        for (Trajet trajet : trajets) {
+            nbTrajet++;
+            if (trajet.getDistance() > 300) {
+                nbTrajetLong++;
+            }
+        }
+
+        if (nbTrajet > 0) {
+            pourcenTrajetLong = (nbTrajetLong * 100.0) / nbTrajet;
+        } else {
+            pourcenTrajetLong = 0; // Si aucun trajet, le pourcentage est 0
+        }
+    }
+
+
+    public void calculerVitesseMoyenneGlobale() {
+        distanceTotale = 0;
+        dureeTotale = 0; // Réinitialiser la durée totale à chaque appel
+
+        for (Trajet trajet : trajets) {
+            distanceTotale += trajet.getDistance();
+            dureeTotale += trajet.getDuree(); // Utiliser getDuree() pour accéder à la durée
+        }
+
+        if (dureeTotale > 0) {
+            vitesseMoyenneGlobale = distanceTotale / dureeTotale;
+        } else {
+            vitesseMoyenneGlobale = 0; // Si aucune durée, la vitesse moyenne est 0
+        }
+    }
+
+    public void afficherStatistiques() {
+        calculerMoyenneDistance(); // Calculer la moyenne des distances
+        calculerPourcentageTrajetsLongs(); // Calculer le pourcentage de trajets longs
+        calculerVitesseMoyenneGlobale(); // Calculer la vitesse moyenne globale
+        System.out.println("Distance moyenne : " + moyenneDistance + " km");
+        System.out.println("Pourcentage de trajets longs : " + pourcenTrajetLong + "%");
+        System.out.println("Vitesse moyenne globale : " + vitesseMoyenneGlobale + " km/h");
+    }
+
+    public void trierConducteursParNote() {
+        List<Conducteur> conducteurs = new ArrayList<>();
+        for (Utilisateur utilisateur : utilisateurs) {
+            if (utilisateur instanceof Conducteur) {
+                conducteurs.add((Conducteur) utilisateur);
+            }
+        }
+
+        // Tri manuel des conducteurs par note moyenne ascendante
+        for (int i = 0; i < conducteurs.size(); i++) {
+            for (int j = i + 1; j < conducteurs.size(); j++) {
+                if (conducteurs.get(i).calculerNoteMoyenne() > conducteurs.get(j).calculerNoteMoyenne()) {
+                    // Échange des conducteurs
+                    Conducteur temp = conducteurs.get(i);
+                    conducteurs.set(i, conducteurs.get(j));
+                    conducteurs.set(j, temp);
+                }
+            }
+        }
+
+        // Affichage des conducteurs triés par note ascendante
+        System.out.println("Conducteurs triés par note ascendante :");
+        for (Conducteur conducteur : conducteurs) {
+            System.out.println(conducteur);
+        }
+    }
 
 
 
