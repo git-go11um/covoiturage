@@ -1,9 +1,18 @@
 package fr.covoiturage;
 
-//import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe principale pour lancer l'application de covoiturage.
+ * Cette classe contient la méthode main qui initialise les objets et exécute les opérations principales.
+ */
 public class Lanceur {
+
+    /**
+     * Point d'entrée principal de l'application.
+     *
+     * @param args les arguments de la ligne de commande
+     */
     public static void main(String[] args) {
         Conducteur conducteur1 = new Conducteur("Robert", "Paris", "Lyon", 0, "4x4", 0);
         Conducteur conducteur2 = new Conducteur("Dédé", "Lille", "Lyon", 0, "4L", 0);
@@ -56,20 +65,18 @@ public class Lanceur {
         plateforme.ajouterUtilisateur(pass1);
         plateforme.ajouterUtilisateur(pass2);
 
-        // Rechercher les trajets de "Lille" à "Lyon"
         List<Trajet> resultats = plateforme.rechercherTrajet("Lille", "Lyon");
         for (Trajet trajet : resultats) {
             System.out.println(trajet);
         }
 
         conducteur1.ajouterTrajet(traj15);
-        //conducteur1.ajouterTrajet(traj3);
-        //conducteur2.ajouterTrajet(traj1);
-       // conducteur3.ajouterTrajet(traj7);
+        conducteur1.ajouterTrajet(traj3);
+        conducteur2.ajouterTrajet(traj1);
+        conducteur3.ajouterTrajet(traj7);
         conducteur4.ajouterTrajet(traj1);
         conducteur4.ajouterTrajet(traj2);
         conducteur4.ajouterTrajet(traj3);
-
 
         List<Conducteur> topConducteurs = plateforme.topConducteurs();
 
@@ -80,25 +87,14 @@ public class Lanceur {
 
         traj1.setConducteur(conducteur1);
         traj1.ajouterPassager(pass1);
-        System.out.println("************");
-        traj1.getDistance();
-        traj1.toString();
-        //System.out.println(traj16.toString());
-        //traj15.calculerVitesseMoyenne();
+        traj1.ajouterPassager(pass2); // Ajout d'un autre passager
         traj16.estRapide();
-        //System.out.println(plateforme.rechercherTrajet("Paris", "Bordeaux"));
-        //System.out.println(conducteur4);
-        //plateforme.afficherStatistiques(conducteur4);
-        //plateforme.calculerMoyenneDistance();
+        System.out.println(plateforme.rechercherTrajet("Paris", "Bordeaux"));
 
-        // Calculer et afficher la distance moyenne des trajets
-        double moyenneDistance = plateforme.calculerMoyenneDistance();
-        System.out.println("La distance moyenne des trajets est : " + moyenneDistance + " km");
-
-        //conducteur1.afficherProfil();
-        //System.out.println(traj1.estLong());
+        conducteur1.afficherProfil();
+        pass1.afficherProfil(); // Affichage du profil du passager
+        System.out.println(traj1.estLong());
         plateforme.afficherTrajets();
-        System.out.println("**********");
         pass1.suivreTrajet(plateforme, "Paris", "Lyon");
         pass1.ajouterNote(conducteur1, 12);
         pass1.ajouterNote(conducteur1, 14);
@@ -109,15 +105,21 @@ public class Lanceur {
         System.out.println(conducteur1.calculerNoteMoyenne());
         System.out.println(conducteur1);
         conducteur1.ajouterNote(pass1, 7);
-        //System.out.println("noteMoyenne : " + pass1.calculerNoteMoyenne());
-        //System.out.println(pass1);
-        System.out.println("*********" + " " + "**********");
-        //plateforme.afficherStatistiques();
+        System.out.println(pass1.calculerNoteMoyenne());
 
+        plateforme.afficherStatistiques();
 
         plateforme.trierConducteursParNote();
 
+        // Tests supplémentaires
+        pass1.setNom("NouveauNom"); // Modification du nom du passager
+        System.out.println("Nouveau nom du passager : " + pass1.getNom());
 
+        conducteur1.setVilleDepart("NouvelleVilleDepart"); // Modification de la ville de départ du conducteur
+        System.out.println("Nouvelle ville de départ du conducteur : " + conducteur1.getVilleDepart());
 
+        System.out.println("Liste des trajets suivis par le passager : " + pass1.getTrajetSuivis());
+
+        System.out.println("Distance totale parcourue par le conducteur : " + conducteur1.calculerDistanceTotale() + " km");
     }
 }

@@ -3,59 +3,102 @@ package fr.covoiturage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe représentant un passager dans le système de covoiturage.
+ * Un passager peut suivre des trajets, ajouter des notes aux conducteurs
+ * et calculer sa note moyenne.
+ */
+public class Passager extends Utilisateur implements Evaluable {
 
-
-public class Passager extends Utilisateur implements Evaluable{
-    
     private ArrayList<Trajet> trajetSuivis;
     private String destPref = "";
     private List<Integer> notes;
 
-
+    /**
+     * Constructeur pour créer un nouveau passager.
+     *
+     * @param nom le nom du passager
+     * @param villeDepart la ville de départ du passager
+     * @param villeArrivee la ville d'arrivée du passager
+     * @param destPref la destination préférée du passager
+     * @param moyenneDistance la distance moyenne parcourue par le passager
+     */
     public Passager(String nom, String villeDepart, String villeArrivee, String destPref, int moyenneDistance) {
         super(nom, villeDepart, villeArrivee, moyenneDistance);
         this.destPref = destPref;
-        this.trajetSuivis=new ArrayList<>();
-        this.notes=new ArrayList<>();
+        this.trajetSuivis = new ArrayList<>();
+        this.notes = new ArrayList<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNom() {
         return super.getNom(); // Surcharge du getter
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setNom(String nom) {
         super.setNom(nom);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getVilleDepart() {
         return "Ville de départ : " + super.getVilleDepart(); // Surcharge du getter
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getVilleArrivee() {
         return "Ville d'arrivée : " + super.getVilleArrivee(); // Surcharge du getter
     }
 
-
+    /**
+     * Retourne la liste des trajets suivis par le passager.
+     *
+     * @return la liste des trajets suivis
+     */
     public ArrayList<Trajet> getTrajetSuivis() {
         return trajetSuivis;
     }
 
+    /**
+     * Retourne la destination préférée du passager.
+     *
+     * @return la destination préférée
+     */
     public String getDestPref() {
         return destPref;
     }
+
+    /**
+     * Définit la destination préférée du passager.
+     *
+     * @param destPref la nouvelle destination préférée
+     */
     public void setDestPref(String destPref) {
         this.destPref = destPref;
     }
 
+    /**
+     * Ajoute un trajet à la liste des trajets suivis par le passager.
+     *
+     * @param plateforme la plateforme de covoiturage
+     * @param villeDepart la ville de départ du trajet
+     * @param villeArrivee la ville d'arrivée du trajet
+     */
     public void suivreTrajet(PlateformeCovoiturage plateforme, String villeDepart, String villeArrivee) {
         List<Trajet> trajetsTrouves = plateforme.rechercherTrajet(villeDepart, villeArrivee);
-    
+
         if (!trajetsTrouves.isEmpty()) {
             for (Trajet trajet : trajetsTrouves) {
                 if (!trajetSuivis.contains(trajet)) {
@@ -68,6 +111,9 @@ public class Passager extends Utilisateur implements Evaluable{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ajouterNote(Utilisateur utilisateur, int note) {
         if (utilisateur instanceof Conducteur) {
@@ -82,12 +128,19 @@ public class Passager extends Utilisateur implements Evaluable{
         }
     }
 
+    /**
+     * Ajoute une note au passager.
+     *
+     * @param note la note à ajouter
+     */
     public void ajouterNote(int note) {
         notes.add(note);
         System.out.println("Note ajoutée : " + note); // Ajout d'un message de débogage
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double calculerNoteMoyenne() {
         if (notes.isEmpty()) {
@@ -102,32 +155,20 @@ public class Passager extends Utilisateur implements Evaluable{
         return (double) somme / notes.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void afficherProfil(){
+    public void afficherProfil() {
         System.out.println(toString());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "Passager [nom=" + getNom() + ", villeDepart=" + getVilleDepart() + ", villeArrivee=" + getVilleArrivee()
                 + ", trajetsPassager=" + trajetSuivis + ", destPref=" + destPref + "]";
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    
-
 }
