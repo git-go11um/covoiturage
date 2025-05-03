@@ -87,7 +87,6 @@ public class Lanceur {
 
         traj1.setConducteur(conducteur1);
         traj1.ajouterPassager(pass1);
-        traj1.ajouterPassager(pass2); // Ajout d'un autre passager
         traj16.estRapide();
         System.out.println(plateforme.rechercherTrajet("Paris", "Bordeaux"));
 
@@ -121,5 +120,13 @@ public class Lanceur {
         System.out.println("Liste des trajets suivis par le passager : " + pass1.getTrajetSuivis());
 
         System.out.println("Distance totale parcourue par le conducteur : " + conducteur1.calculerDistanceTotale() + " km");
+
+        System.out.println("*************************");
+        System.out.println("*****************************");
+        plateforme.calculerPourcentageTrajetsLongs();
+
+
+
+
     }
 }

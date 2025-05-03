@@ -14,8 +14,6 @@ public class PlateformeCovoiturage {
     private ArrayList<Trajet> trajets;
     private double moyenneDistance;
     private int distanceTotale;
-    private int nbTrajetLong;
-    private int nbTrajet;
     private double pourcenTrajetLong;
     private double dureeTotale;
     private double vitesseMoyenneGlobale;
@@ -80,6 +78,14 @@ public class PlateformeCovoiturage {
     public void setTrajets(ArrayList<Trajet> trajets) {
         this.trajets = trajets;
     }
+    /**
+    * Retourne la liste des trajets enregistrés sur la plateforme.
+     *
+    * @return une liste contenant tous les trajets enregistrés sur la plateforme
+    */
+    public ArrayList<Trajet> getTrajets() {
+        return trajets;
+    }
 
     /**
      * Ajoute un utilisateur à la plateforme.
@@ -115,6 +121,7 @@ public class PlateformeCovoiturage {
         }
         return resultats;
     }
+    
 
     /**
      * Retourne la liste des trois meilleurs conducteurs en fonction de la distance totale parcourue.
@@ -128,7 +135,7 @@ public class PlateformeCovoiturage {
                 conducteurs.add((Conducteur) utilisateur);
             }
         }
-
+    
         // Tri manuel des conducteurs par distance totale parcourue
         for (int i = 0; i < conducteurs.size(); i++) {
             for (int j = i + 1; j < conducteurs.size(); j++) {
@@ -140,7 +147,7 @@ public class PlateformeCovoiturage {
                 }
             }
         }
-
+    
         // Sélection des trois meilleurs conducteurs
         List<Conducteur> top3Conducteurs = new ArrayList<>();
         int limite = Math.min(3, conducteurs.size());
@@ -149,6 +156,8 @@ public class PlateformeCovoiturage {
         }
         return top3Conducteurs;
     }
+    
+
 
     /**
      * Calcule la distance moyenne des trajets.
@@ -171,26 +180,39 @@ public class PlateformeCovoiturage {
         return this.moyenneDistance;
     }
 
+   
+
     /**
      * Calcule le pourcentage de trajets longs (distance > 300 km).
      */
     public void calculerPourcentageTrajetsLongs() {
-        nbTrajet = 0; // Réinitialiser le nombre total de trajets
-        nbTrajetLong = 0; // Réinitialiser le nombre de trajets longs
-
+        int nbTrajet = 0; // Déclarer comme variable locale
+        int nbTrajetLong = 0; // Déclarer comme variable locale
+    
         for (Trajet trajet : trajets) {
             nbTrajet++;
             if (trajet.getDistance() > 300) {
                 nbTrajetLong++;
             }
         }
-
+    
+        System.out.println("Nombre total de trajets : " + nbTrajet);
+        System.out.println("Nombre de trajets longs : " + nbTrajetLong);
+    
         if (nbTrajet > 0) {
             pourcenTrajetLong = (nbTrajetLong * 100.0) / nbTrajet;
         } else {
             pourcenTrajetLong = 0; // Si aucun trajet, le pourcentage est 0
         }
+    
+        System.out.println("Pourcentage de trajets longs : " + pourcenTrajetLong);
     }
+    
+    
+    
+    
+    
+    
 
     /**
      * Calcule la vitesse moyenne globale des trajets.
@@ -209,6 +231,24 @@ public class PlateformeCovoiturage {
         } else {
             vitesseMoyenneGlobale = 0; // Si aucune durée, la vitesse moyenne est 0
         }
+    }
+
+    /**
+     * Retourne le pourcentage de trajets longs (distance > 300 km).
+     *
+     * @return le pourcentage de trajets longs
+     */
+    public double getPourcenTrajetLong() {
+        return pourcenTrajetLong;
+    }
+
+    /**
+     * Retourne la vitesse moyenne globale des trajets.
+     *
+     * @return la vitesse moyenne globale
+     */
+    public double getVitesseMoyenneGlobale() {
+        return vitesseMoyenneGlobale;
     }
 
     /**

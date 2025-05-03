@@ -114,19 +114,23 @@ public class Passager extends Utilisateur implements Evaluable {
     /**
      * {@inheritDoc}
      */
+
+
     @Override
-    public void ajouterNote(Utilisateur utilisateur, int note) {
-        if (utilisateur instanceof Conducteur) {
-            Conducteur conducteur = (Conducteur) utilisateur;
-            conducteur.ajouterNote(note); // Ajouter directement la note au conducteur
-            System.out.println("Le passager " + getNom() + " a donné une note de " + note + " au conducteur " + conducteur.getNom());
-        } else if (utilisateur instanceof Passager) {
-            notes.add(note);
-            System.out.println("Le passager " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
-        } else {
-            System.out.println("Seuls les conducteurs peuvent être notés par les passagers, et seuls les passagers peuvent noter d'autres passagers.");
-        }
+public void ajouterNote(Utilisateur utilisateur, int note) {
+    if (utilisateur instanceof Conducteur) {
+        Conducteur conducteur = (Conducteur) utilisateur;
+        conducteur.ajouterNote(note); // Ajouter directement la note au conducteur
+        System.out.println("Le passager " + getNom() + " a donné une note de " + note + " au conducteur " + conducteur.getNom());
+    } else if (utilisateur instanceof Passager) {
+        Passager passager = (Passager) utilisateur;
+        passager.ajouterNote(note); // Ajouter directement la note au passager
+        System.out.println("Le passager " + getNom() + " a reçu une note de " + note + " de la part de " + utilisateur.getNom());
+    } else {
+        System.out.println("Seuls les conducteurs peuvent être notés par les passagers, et seuls les passagers peuvent noter d'autres passagers.");
     }
+}
+
 
     /**
      * Ajoute une note au passager.
